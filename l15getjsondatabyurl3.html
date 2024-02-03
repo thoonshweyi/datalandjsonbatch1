@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Openweather API From URL 3</title>
+     </head>
+     <body>
+       
+          
+               <script type="text/javascript">
+                   var xmlhttp = new XMLHttpRequest();
+                   var url = 'https://randomuser.me/api/';
+
+               //     xmlhttp.open("GET",url,true); // true mean yes asynchronize
+               //     xmlhttp.send();
+
+                   xmlhttp.onreadystatechange = function(){
+                         console.log('State Changed = ',xmlhttp.readyState,xmlhttp.status);
+                    
+                         if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                              var result = xmlhttp.responseText;
+                              console.log(result);     
+                              console.log(typeof result);  
+                              
+                              result = JSON.parse(result);
+                              console.log(result);     
+                              console.log(typeof result); 
+
+                              console.log(result.results);
+                              console.log(result.results[0]);
+                              console.log(result.results[0].name);
+                              console.log(result.results[0].name.title,result.results[0].name.first,result.results[0].name.last);
+                              console.log(result.results[0]["name"]["title"],result.results[0]["name"]["first"],result.results[0]["name"]["last"]);
+                         }
+                    }
+
+                   xmlhttp.open("GET",url,true); // true mean yes asynchronize
+               //  xmlhttp.open("GET",url,false); // false mean no asynchronize
+                   xmlhttp.send();
+
+
+               //     = asynchronize true
+                    //State Changed =  1 0
+                    // State Changed =  2 200
+                    // State Changed =  3 200
+                    // State Changed =  4 200     
+               
+               //     = asynchronize false
+                    // State Changed =  1 0
+                    // State Changed =  4 200 
+
+               //        asyn = false, it should use the method of "directly checked condition"
+               //        asyn = true, it should use onreadystetechange and condition check method
+               //        However onreadystetechange and condition check method can solve both asyn = true and false problems
+               //        open() send() can be written at the upper or lower of onreadystatechange function
+               </script>
+     </body>
+</html>
+
+
+<!-- 
+     asynchronize mean to execute processes orderly
+ -->

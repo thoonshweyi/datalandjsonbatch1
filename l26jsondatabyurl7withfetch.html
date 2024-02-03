@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>IP Registry API From URL 7 with fetch</title>
+          <style type="text/css">
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <div id="display"></div>
+               <button type="button" id="btn">Click Me</button>
+          </div>
+       
+     
+          <script type="text/javascript">
+
+              var getbtn = document.getElementById("btn");
+              var getdisplay = document.getElementById("display");
+
+              getbtn.addEventListener("click",function(){
+                    loaddata();
+              });
+
+              function loaddata(){
+                    var key = `jkjnmoz3xzs9g6in`;
+                    var url = `https://api.ipregistry.co?key=${key}`; 
+
+                    
+                    fetch(url).then(function(response){
+                         return response.json();
+                    }).then(function(data){
+                         var html = `
+                              <ul>
+                                   <li>External IP = ${data.ip}</li>
+                                   <li>Current Device = ${data.user_agent.device.name} ${data.user_agent.device.type}</li>
+                                   <li>Operating System = ${data.user_agent.os.name}</li>
+                                   <li>Load By = ${data.user_agent.type}</li>
+                                   <li>City = ${data.location.city}</li>
+                                   <li>Local Currency = ${data.currency.symbol} </li>
+                                   <li>Time Zone = ${data["time_zone"]["id"]}</li>
+                              </ul>
+                         `;
+                         getdisplay.innerHTML = html;
+                    }).catch(function(err){
+                         console.log(err);
+                    });
+               }
+          </script>
+     </body>
+</html>

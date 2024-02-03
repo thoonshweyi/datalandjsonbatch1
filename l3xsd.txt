@@ -1,0 +1,128 @@
+=>xml to json
+          xml formatter
+
+=>XSD
+     XSD stand for XML Schema Definations
+
+=>XML Validation
+     to check Syntax | Structure
+     (i) XSD - XML Schema Definitions
+     (ii) DTD = Document Type Definitions
+
+     https://www.liquid-technologies.com/online-xml-to-xsd-converter
+
+=>XSD 
+1. XSD can defines what elements and attribute can be represents
+2. XSD can specifies the elementss datatype
+3. XSD decides the number of child elements
+4. XSD defines default value,fixed value, optional
+
+=> How to use XSD 
+     XSD is written in XML
+     start with <schema> element to every XML
+     <schema> can contain some attribute, but must contain  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+=Syntax
+     <?xml version="1.0"?>
+     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+          ----
+          ----
+     </xs:schema>
+
+
+
+     <xs:element name="price" minOccurs="1" maxOccurs="unbounded" type="xs:integer" />
+     minOccurs="0" mean not entities
+     minOccurs="1" mean mkandatory
+
+     maxOccurs="unbounded" mean infinite
+
+     <price>$150</price>
+
+
+=XSD Interpretation
+
+     <?xml version="1.0" encoding="utf-8"?>
+     <!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+     <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+     <xs:element name="Root">
+          <xs:complexType>
+          <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="product">
+               <xs:complexType>
+               <xs:sequence>
+               <xs:element name="title" type="xs:string" />
+               <xs:element minOccurs="0" name="name" type="xs:string" />
+               <xs:element minOccurs="0" name="color" type="xs:string" />
+               <xs:element minOccurs="0" name="type" type="xs:string" />
+               </xs:sequence>
+               </xs:complexType>
+          </xs:element>
+          </xs:sequence>
+     </xs:complexType>
+     </xs:element>
+
+
+     <Root>
+          <product>
+               <title>Food</title>
+               <name>M150</name>
+               <color>Black</color>
+               <type>energy drink</type>
+          </product>
+
+          <product>
+               <title>Food</title>
+               <color>Black</color>
+          </product>
+     </Root>
+
+     =Question
+          <?xml version="1.0" encoding"utf-8"?>
+          <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+               <xs:element name="product">
+                    <xs:complexType>
+                         <xs:sequence>
+                              <xs:element name="productname" minOccurs="1" maxOccurs="unbounded" type="xs:string"/>
+                              <xs:element name="unitprice" minOccurs="1" maxOccurs="2" type="xs:string"/>
+
+                         </xs:sequence>
+                    </xs:complexType>
+               </xs:element>
+          </xs:schema>
+
+     =Answer
+          <?xml version="1.0" encoding"utf-8"?>
+          <product>
+               <productname>M150</productname>
+               <unitprice>$500</unitprice>
+          </product>
+
+     =Answer
+          <?xml version="1.0" encoding"utf-8"?>
+          <product>
+               <item>
+                    <name>M150</name>
+                    <price>500</price>
+               </item>
+          </product>
+     
+     =Question
+     <?xml version="1.0" encoding"utf-8"?>
+     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+          <xs:element name="product">
+               <xs:complexType>
+                    <xs:sequence>  
+                         <xs:element name="item" maxOccurs="unbounded">
+                              <xs:complexType>
+                                   <xs:sequence>
+                                        <xs:element name="name" minOccurs="1" maxOccurs="unbounded" type="xs:string"/>
+                                        <xs:element name="name" minOccurs="1" maxOccurs="unbounded" type="xs:unsignedByte"/>
+                                   </xs:sequence>
+                              </xs:complexType> 
+                         </xs:element>                   
+                    </xs:sequence>
+               </xs:complexType>
+          </xs:element>
+
+          

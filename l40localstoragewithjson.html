@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Local Storage with JSON</title>
+          <style type="text/css">
+               *{
+                    box-sizing: border-box;
+               }
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+               .container label{
+                    display: block;
+               }
+               .container .form-control{
+                    width: 100%;
+                    margin-bottom: 10px;
+               }
+          </style>
+     </head>
+     <body>
+          
+          <div class="container">
+               <form action="" method="">
+                    <div class="form-group mb-3">
+                         <label for="firstname">First Name</label>
+                         <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Enter Firstname" />
+                    </div>
+
+                    <div class="form-group mb-3">
+                         <label for="lastname">Last Name</label>
+                         <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Enter Lastname" />
+                    </div>
+
+                    <div class="form-group mb-3">
+                         <label for="email">Email</label>
+                         <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email" />
+                    </div>
+
+                    <div class="form-group mb-3">
+                         <label for="password">Password</label>
+                         <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" />
+                    </div>
+
+                    <button type="submit" id="submit-btn">Submit</button>
+               </form>
+          </div>
+
+     
+          <script type="text/javascript">
+
+               const getbtn = document.getElementById("submit-btn");
+               
+
+               getbtn.addEventListener("click",function(e){
+                    var getinputs = document.querySelectorAll("input[type='text'],input[type='email'],input[type='password']");
+                    // console.log(getinputs);
+
+                    var dataobjs = {};
+
+                    for(var x=0; x<getinputs.length; x++){
+                         var getname = getinputs[x].name;
+                         var getvalue = getinputs[x].value;
+                         // console.log(getname);
+                         // console.log(getvalue);
+                         
+                         // dataobj.getname = getvalue; // *Wrong Concept cuz getname is variable, it's not keyname (object's getname: overwrite)
+                         dataobjs[getname] = getvalue; // {firstname: 'Aung', lastname: 'Kyaw', email: 'aungkyaw@gmail.com', password: '12345'}
+                    }
+                    // console.log(dataobj);
+
+                    // localStorage.setItem("info",JSON.stringify(dataobjs));
+                    localStorage["info"] = JSON.stringify(dataobjs);
+                    
+                    e.preventDefault();
+               });
+
+               window.onload = function(){
+                    let datas;
+
+                    // if(localStorage.getItem("info") != null){
+                    //      datas = JSON.parse(localStorage.getItem("info"));
+                    //      // console.log(datas);
+                         
+                    //      console.log(datas.firstname,datas.lastname)
+                    //      console.log(datas.email,datas.password)
+                    // }
+
+                    if(localStorage["info"] != null){
+                         datas = JSON.parse(localStorage.getItem("info"));
+                         // console.log(datas);
+                         
+                         // console.log(datas.firstname,datas.lastname)
+                         // console.log(datas.email,datas.password)
+
+                    
+                    }
+               }
+          </script>
+     </body>
+</html>
+
+

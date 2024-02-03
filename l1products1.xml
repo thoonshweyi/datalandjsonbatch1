@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<productList>
+     <product>
+          <name>Webstrom</name>
+          <description>html/css/js support</description>
+          <price>$ 100</price>
+     </product>
+</productList>

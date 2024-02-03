@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Post Json Data to Local / Post Method</title>
+          <style type="text/css">
+               *{
+                    box-sizing: border-box;
+               }
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+               label{
+                    display: block;
+                    margin-bottom: 5px;
+               }
+               .mb-3{
+                    margin-bottom: 5px;
+               }
+               .form-control,.form-select{
+                    width: 100%;
+                    margin-bottom: 3px;
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <form action="" method="">
+                    <div class="form-group mb-3">
+                         <label for="number">Enter Number</label>
+                         <input type="number" name="number" id="number" class="form-control" placeholder="Enter Number"/>
+                    </div>
+
+                    <div class="form-group mb-3">
+                         <label for="unit">Unit</label>
+                         <select name="unit" id="unit" class="form-select">
+                              <option value="" disabled selected>Choose Unit</option>
+                              <option value="kilo">Kilometer</option>
+                              <option value="mile">Mile</option>
+                         </select>
+                    </div>
+
+                    <button type="submit" id="result-btn">Result</button>
+
+               </form>
+          </div>
+       
+     
+          <script type="text/javascript">
+
+               const getbtn = document.getElementById("result-btn");
+               getbtn.addEventListener("click",function(e){
+                    var getnum = document.getElementById("number").value;
+                    var getunit = document.getElementById("unit").value;
+                    // console.log(getnum,getunit); 
+                    var datajsobj = {"number":getnum,"unit":getunit};
+                    // console.log(datajsobj);
+                    var datajsonobj = JSON.stringify(datajsobj);
+                    // console.log(datajsonobj);
+
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = `http://localhost/jsonserver/l20server.php`;
+                    xmlhttp.open("POST",url,true); // true mean synchronize
+                    xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                    xmlhttp.send("datas="+datajsonobj);
+
+                    xmlhttp.onreadystatechange = function(){
+                         if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                              var result = xmlhttp.responseText;
+                              
+                              // console.log(xmlhttp);
+                              // console.log(typeof xmlhttp.responseText);
+
+                              var resultobj = JSON.parse(result);
+                              console.log(resultobj);
+                              
+                              console.log(resultobj.result);
+                              console.log(resultobj.message);
+                         }
+                    }
+
+                    e.preventDefault();
+               });
+
+          </script>
+     </body>
+</html>
+
+<!-- 
+     =>Send data with json string
+          http://127.0.0.1:5501/l20postjsondatatolocal.html?data={"number":100,"unit":kilo};
+     
+     =>Server Part
+          receive json string
+          -change to json format
+          -get data from each index of the json array
+ -->
