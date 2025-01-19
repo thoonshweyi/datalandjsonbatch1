@@ -1,0 +1,77 @@
+=>XPATH
+XPATH
+
+XPATH is syntax for defining path of the XML element
+
+Window Path
+img/fav/favicon.png
+
+=>Path Expressions                 Usages
+     /                             Select the root node
+     //                            Select any node math the name
+     .                             Select the current node
+     ../                           Select the parents node
+     []                            Specify the condition
+     @                             Assess the attribute
+     count(),last(),text()         Functions
+
+
+<?xml version="1.0"?>
+<product>
+     <name>Jetbrain</name>                             /product/name
+     <description>Webstrom Editor</description>        /product/description
+     <price>100</price>                                /product/price
+     <status>true</status>
+</product>
+
+<?xml version="1.0"? encoding="UTF-8"?>
+<class>
+     <s:students>
+          <s:student id="100">Aung Aung</s:student>
+          <s:student id="101">Maung Maung</s:student>
+          <s:student id="102">Kyaw Kyaw</s:student>
+     </s:students>
+
+     <t:teachers>
+          <t:teacher id="200">Su Su</t:teacher>
+          <t:teacher id="201">Nu Nu</t:teacher>
+          <t:teacher id="202">Hla Hla</t:teacher>
+     </t:teachers>
+</class>
+
+1. Select the document node
+/
+
+2. Select the 'class' element
+/class
+
+3. Select the 'student' element under the "students" node
+/class/s:students/s:student
+
+4. Select "teacher" with id = 201
+//t:teacher[@id='201']
+
+5. Select the value of the first student
+//s:student[1]/text()
+
+6. Count number of students in the class
+count(//s:student)
+
+
+https://codebeautify.org/Xpath-Tester
+/class
+/class/s:students
+/class/s:students/s:student
+
+//s:students
+//s:student
+
+//s:student[@id=100]
+//s:student[@id=101]
+//s:student[@id=102]
+
+//s:student[@id=102]/text()
+
+count(//s:students)
+count(//s:student)
+

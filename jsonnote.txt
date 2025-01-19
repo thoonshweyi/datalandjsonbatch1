@@ -1,0 +1,728 @@
+=>JSON.parse() & JSON.stringify()
+     const student = '{"firstname":"Kyaw","lastname":"Zayar","age":15}'; // must be single line, cuz it's string
+
+     console.log(student);
+     console.log(typeof(student));
+
+     studentobj = JSON.parse(student);
+     console.log(studentobj);
+     console.log(typeof(studentobj));
+
+     console.log(studentobj.firstname,studentobj.lastname);
+
+     const staff = {
+          "firstname":"Hsu",
+          "lastname":"Mon",
+          "age":20
+     };
+     console.log(staff);
+     console.log(typeof(staff));
+
+     staffstr = JSON.stringify(staff);
+
+     console.log(staffstr);
+     console.log(typeof(staffstr));
+
+     console.log(staffstr.firstname,staffstr.lastname); // undefined undefined
+
+=>Accessing JSON Object
+     const info = {"coord":{"lon":96.1812,"lat":16.8023},"weather":[{"id":802,"main":"Clouds","description":"scattered clouds","icon":"03n"}],"base":"stations","main":{"temp":301.23,"feels_like":305.94,"temp_min":301.23,"temp_max":301.23,"pressure":1011,"humidity":83},"visibility":6000,"wind":{"speed":2.06,"deg":210},"clouds":{"all":40},"dt":1700753126,"sys":{"type":1,"id":9322,"country":"MM","sunrise":1700696610,"sunset":1700737191},"timezone":23400,"id":1298824,"name":"Yangon","cod":200};
+
+     console.log(info);
+     console.log(info.weather);
+
+     console.log(info.weather[0]);
+     console.log(info.weather[0].main);      // Dot Notation
+     console.log(info.weather[0]["main"]);   // Bracket Notation
+
+
+     console.log(info.wind.speed);
+     console.log(info.wind["speed"]);
+     console.log(info['wind']['speed']);
+
+=>GET Data
+      
+     =>For weather information
+          https://openweathermap.org/
+          
+          =>API Call
+               https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+
+               lat = Lattitude
+               lon = Longitude
+               API key = personal key 
+               
+               *developer must provide relevant values for those variables.
+          =>API Response
+               API wil response when the url is called.
+               Data is available in JSON, XML, or HTML format
+
+               -Response result will be as  Sample format.
+
+          =>Openweather Account
+               Thoon Shwe Yi Kyaw > MY API Keys
+               =Generate New Key for "DLT Project"
+               *API key is not activated immediately. It may active at least 30 minutes after creation.
+
+
+          =>For the value of variables at URL
+               =Go to Google Map
+                    Left Click or Right Click on the map to get latiture and longitude.
+
+          =>XML Method**
+               =>Local 
+                    =In Chrome
+                         <!-- https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=ab97e13f76f324f780bf3244b9c4b672 -->
+
+                         *Upon the url is called in the address bar, it return the json response.
+                         =Copy the json format response.
+
+                    =In .json file
+                         =Past the response text
+
+                    =In HTML file
+                         <script type="text/javascript">
+
+                              // AJAX
+                              // initialize the HTTP Request
+
+                              var xmlhttp = new XMLHttpRequest();
+                              xmlhttp.open("GET","./l12simpledata.json",false); // false mean no asynchronize
+                              xmlhttp.send();
+
+
+                              if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                                   // var result = xmlhttp;
+                                   // console.log(result); // XMLHttpReqeust Object
+                                   
+                                   var result = xmlhttp.responseText;
+                                   console.log(result)
+                                   console.log(typeof result)
+
+                                   result = JSON.parse(result);
+
+                                   console.log(result);
+                                   console.log(typeof result);
+
+                                   console.log(result.weather);
+                                   console.log(result.weather[0].main);
+                                   console.log(result.weather[0]["main"]);
+
+                                   console.log(result.wind.speed);
+                                   console.log(result.wind["speed"]);
+                                   console.log(result["wind"]["speed"]);
+
+                                   console.log(result.name);
+                              }
+                         </script>
+
+               =>External 
+                    
+          
+     =>Load Data
+          =In HTML File
+               <div class="container">
+                    <div id="display"></div>
+                    <button type="button" id="btn">Load Data</button>
+               </div>
+       
+               <script type="text/javascript">
+
+                    var getdisplay = document.getElementById("display");
+                    var getbtn = document.getElementById("btn");
+
+                    getbtn.addEventListener("click",function(){
+                         var xmlhttp = new XMLHttpRequest();
+                         var url = 'https://randomuser.me/api/';
+
+                         xmlhttp.onreadystatechange = function(){
+                                   console.log('State Changed = ',xmlhttp.readyState,xmlhttp.status);
+                              
+                                   if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                                        var result = xmlhttp.responseText;
+                                        
+                                        result = JSON.parse(result);
+                                        
+                                        // console.log(result);
+                                        // console.log(result.results[0].name.title,result.results[0].name.first,result.results[0].name.last);
+                                   
+                                        var html= `<h3>${result.results[0].name.title}.${result.results[0].name.first} ${result.results[0].name.last}</h3>
+                                        <img src='${result.results[0].picture.large}' />
+                                        `;
+                                   
+                                        getdisplay.innerHTML = html;
+                                   }
+
+                              }
+                              // console.log(xmlhttp);
+                              xmlhttp.onprogress = function(){
+                                   console.log('ON PROGRESS= ',xmlhttp.readyState,xmlhttp.status)
+                              }
+                              xmlhttp.onload = function(){
+                                   console.log('ON LOAD= ',xmlhttp.readyState,xmlhttp.status)
+                              }
+
+
+                         xmlhttp.open("GET",url,true); // true mean yes asynchronize
+                         xmlhttp.send();
+                    });
+               </script>
+
+               State Changed =  1 0
+               State Changed =  2 200
+               State Changed =  3 200
+               ON PROGRESS=  3 200
+               State Changed =  4 200  
+               ON LOAD=  4 200
+
+               *3 = onprogress()
+               *4 = onload()
+
+     =>For Random Joke
+          https://api.chucknorris.io/
+          https://api.chucknorris.io/jokes/random
+          
+          *need vpn to access
+
+          =>Joke Request
+               =>Nested Conditions Method**
+
+                    =In HTML File
+                         <script type="text/javascript">
+
+                              var getdisplay = document.getElementById("display");
+                              var getbtn = document.getElementById("btn");
+
+                              getbtn.addEventListener("click",function(){
+                                   var xmlhttp = new XMLHttpRequest();
+                                   var url = 'https://api.chucknorris.io/jokes/random';
+
+                                   xmlhttp.onreadystatechange = function(){
+                                             // console.log('State Changed = ',xmlhttp.readyState,xmlhttp.status);
+                                        
+                                             if(this.readyState === 4){
+                                                  if(this.status === 200){
+                                                       var result = xmlhttp.responseText;
+                                                  
+                                                       result = JSON.parse(result);
+                                                       
+                                                       // console.log(result);
+                                                  
+                                                       var html= `<img src='${result.icon_url}' />
+                                                       <h3>${result.value}</h3>
+                                                       
+                                                       `;
+                                                  
+                                                       getdisplay.innerHTML = html;
+                                                  }
+                                                  
+                                             }
+
+                                        }
+                                        // console.log(xmlhttp);
+                                        xmlhttp.onprogress = function(){
+                                             console.log('ON PROGRESS= ',xmlhttp.readyState,xmlhttp.status)
+                                        }
+                                        xmlhttp.onload = function(){
+                                             console.log('ON LOAD= ',xmlhttp.readyState,xmlhttp.status)
+                                        }
+
+
+                                   xmlhttp.open("GET",url,true); // true mean yes asynchronize
+                                   xmlhttp.send();
+                              });
+
+                         </script>      
+
+     =>Fetch Method**
+          
+          fetch()
+               Syntax:
+               fetch(url)
+               .then(response=>response.json())
+               .then(data)
+               .catch(err=>console.log(err))
+     
+          1 get data from url
+          2 convert json format
+          3 object print out
+          4 error catching
+
+          fetch - then - then - catch
+          response - convert to json object - getting data from formated json object - error handling
+
+          =>Local
+               =IN HTML File
+                    <script type="text/javascript">
+                    
+                         var url = "./l12simpledata.json";
+                         fetch(url).then(function(response){
+                              // console.log(response); // Response Object
+                              // console.log(response.headers.get("Content-type")); // application/json; charset=UTF-8
+                              // console.log(response.type); // basic
+                              return response.json();
+                         })
+                         .then(function(data){
+                              // console.log(data); // json object
+                              // console.log(typeof data); // object
+                              
+
+                              console.log(data.weather);
+                              console.log(data.weather[0].main);
+                              console.log(data.weather[0]["main"]);
+
+                              console.log(data.wind.speed);
+                              console.log(data.wind["speed"]);
+                              console.log(data["wind"]["speed"]);
+
+                              console.log(data.name);
+                         })
+                         .catch(function(err){
+                              console.log(err);
+                         });
+                    </script>
+
+                    -fetch() return goes to then() and this then return goes to next then() and if error occur catch block will run.
+                    *then() must return
+                    -it is like forEach looping
+                         girls.forEach(function(girl){
+                              
+                         });
+                    -step by step fetch
+                         var getresponse = fetch(url);
+                         var getjsonrp = getresponse.then(function(rp){
+                              return rp.json();
+                         });
+                         var jsondata = getjsonrp.then(function(dt){
+                              console.log(dt);
+                         });
+                         -it is complex. then() make ease the code by writing concat function.
+               =In JSON File (.json)
+                    {"coord":{"lon":96.1812,"lat":16.8023},"weather":[{"id":802,"main":"Clouds","description":"scattered clouds","icon":"03n"}],"base":"stations","main":{"temp":301.23,"feels_like":305.94,"temp_min":301.23,"temp_max":301.23,"pressure":1011,"humidity":83},"visibility":6000,"wind":{"speed":2.06,"deg":210},"clouds":{"all":40},"dt":1700753126,"sys":{"type":1,"id":9322,"country":"MM","sunrise":1700696610,"sunset":1700737191},"timezone":23400,"id":1298824,"name":"Yangon","cod":200}
+
+               =>Fetch Arrow Function*
+                    =In HTML File
+                         <script type="text/javascript">
+                              fetch(url).then(response=>response.json()).then(data=>{
+                                   // console.log(data);
+                                   console.log(data.wind.speed);
+                                   console.log(data.name);
+                              }).catch(err=>err);
+                         </script>
+          
+          =>External URL
+               =In HTML File
+                    <script type="text/javascript">
+                         var url = 'https://api.chucknorris.io/jokes/random';
+                         fetch(url).then(function(response){
+                              return response.json();
+                         }).then(function(data){
+                              //console.log(data);
+
+                              var html= `<img src='${data.icon_url}' />
+                                             <h3>${data.value}</h3>
+                                        `;
+                              getdisplay.innerHTML = html;
+                         }).catch(function(err){
+                              console.log(err);
+                         });
+                    </script>
+               
+               =>For Ecommerce Products
+                    https://dummyjson.com/
+                    https://dummyjson.com/products/1
+
+                    =In HTML File
+                         function loaddata(){
+                              var url = "https://dummyjson.com/products";
+                              fetch(url).then(function(response){
+                                   return response.json();
+                              }).then(function(data){
+                                   // console.log(data);           
+                                   // console.log(data.products); 
+
+                                   data.products.forEach(function(val){
+                                        // console.log(val);
+                                        console.log(val.id,val.title,val.price);
+                                   });
+                              }
+                              ).catch(function(err){
+                                   console.log(err);
+                              });
+                         }
+
+               =>For User IP and User Agent Information
+                    https://ipregistry.co/
+
+                    =Register An Account
+                         -Email
+                         -First name
+                         -Last name
+                    =Gmail message
+                         -Verify Email
+
+                    *Do not need password anymore. 
+                    In future login, a mail with the authenticated user's route is send to the gmail.  
+
+                    =Dashboard
+                         -Free Request 100000
+                         
+                         API Keys >
+                              =>CREATE NEW KEY
+                                   NEW API KEY
+                                   -Key name 
+                         Documentation >
+                              Authentication > 
+                                   https://api.ipregistry.co?key=YOUR_API_KEY
+                    
+                    =>IP Registry Request
+                         =In HTML File
+                              function loaddata(){
+                                   var key = `jkjnmoz3xzs9g6in`;
+                                   var url = `https://api.ipregistry.co?key=${key}`; 
+
+                                   
+                                   fetch(url).then(function(response){
+                                        return response.json();
+                                   }).then(function(data){
+                                        var html = `
+                                             <ul>
+                                                  <li>External IP = ${data.ip}</li>
+                                                  <li>Current Device = ${data.user_agent.device.name} ${data.user_agent.device.type}</li>
+                                                  <li>Operating System = ${data.user_agent.os.name}</li>
+                                                  <li>Load By = ${data.user_agent.type}</li>
+                                                  <li>City = ${data.location.city}</li>
+                                                  <li>Local Currency = ${data.currency.symbol} </li>
+                                                  <li>Time Zone = ${data["time_zone"]["id"]}</li>
+                                             </ul>
+                                        `;
+                                        getdisplay.innerHTML = html;
+                                   }).catch(function(err){
+                                        console.log(err);
+                                   });
+                              }
+
+                    =>XML onload Method**
+                         =In HTML File
+                              function loaddata(){
+                                   var xmlhttp = new XMLHttpRequest();
+                                   var key = `jkjnmoz3xzs9g6in`;
+                                   var url = `https://api.ipregistry.co?key=${key}`; 
+
+                                   xmlhttp.open("GET",url) // default mean yes synchronize
+                                   
+                                   xmlhttp.onload = function(){
+                                        // console.log(xmlhttp);
+                                        var result = xmlhttp.response;
+                                        result = JSON.parse(result);
+                                        console.log(result);
+
+                                        var html = `
+                                             <ul>
+                                                  <li>External IP = ${result.ip}</li>
+                                                  <li>Current Device = ${result.user_agent.device.name} ${result.user_agent.device.type}</li>
+                                                  <li>Operating System = ${result.user_agent.os.name}</li>
+                                                  <li>Load By = ${result.user_agent.type}</li>
+                                                  <li>City = ${result.location.city}</li>
+                                                  <li>Local Currency = ${result.currency.symbol} </li>
+                                                  <li>Time Zone = ${result["time_zone"]["id"]}</li>
+                                             </ul>
+                                        `;
+                                        getdisplay.innerHTML = html;
+                                   }
+                                   xmlhttp.send();
+                              }
+
+     =>jQuery AJAX Method**
+          =Syntax 
+               $.ajax({
+                    url:url
+               }).done((data)=>{
+                    output
+               }).fail(()=>{
+
+               });
+          
+          =Local
+               =In HTML File
+                    var url = "./l12simpledata.json";
+                    $.ajax({
+                         method:"GET",
+                         url:url,
+                         dataType:'json' // text
+                    }).done((data)=>{
+                         // console.log(data); // Json Object
+                         // console.log(typeof data); // object
+                    
+                         console.log(data.weather);
+                         console.log(data.weather[0].main);
+                         console.log(data.weather[0]["main"]);
+
+                         console.log(data.wind.speed);
+                         console.log(data.wind["speed"]);
+                         console.log(data["wind"]["speed"]);
+
+                         console.log(data.name);
+                    }).fail(()=>{
+                         console.log("Error")
+                    });
+                    
+               =AJAX Without  done()
+                    $.ajax({
+                         method:"GET",
+                         url:url,
+                         dataType:'json', // text
+                         success:successfun
+                    });
+
+                    function successfun(data,status,xhr){
+                         console.log(data); // Json Object
+                         console.log(status); // success
+                         console.log(xhr); // {readyState: 4, getResponseHeader: ƒ, getAllResponseHeaders: ƒ, setRequestHeader: ƒ, overrideMimeType: ƒ, …}
+                         console.log(xhr.status); // 200
+                         
+
+                         console.log(data.wind.speed);
+                         console.log(data.wind["speed"]);
+                         console.log(data["wind"]["speed"]);
+
+                         console.log(data.name);
+                    }
+               
+               =jQuery AJAX Short Hand
+                    $("#btn").click(()=>{
+                         $.get(url,output);
+                    });
+                    function output(data){
+                         console.log(data); // Json Object
+                         console.log(data.name); 
+                    }
+
+          =Enternal URL
+               =>Checknorris response
+                    var url = 'https://api.chucknorris.io/jokes/random';
+                    $.ajax({
+                         method:"GET",
+                         url:url,
+                         dataType:'json'
+                    }).done((data)=>{
+                         // console.log(data); // {categories: Array(0), created_at: '2020-01-05 13:42:28.143137', icon_url: 'https://assets.chucknorris.host/img/avatar/chuck-norris.png', id: 'eJeQFKmETaaFdKzVf-PJTw', updated_at: '2020-01-05 13:42:28.143137', …}
+
+                         var html= `<img src='${data.icon_url}' />
+                                        <h3>${data.value}</h3>
+                                   `;
+                         getdisplay.innerHTML = html;
+                    }).fail(()=>{
+                         console.log("Error")
+                    });
+               
+               =>Dummy Json Response
+                    function loaddata(){
+                    var url = "https://dummyjson.com/products";
+                    $.ajax({
+                         method:"GET",
+                         url:url,
+                         dataType:'json'
+                    }).done(($data)=>{
+                              console.log(data);            // {products: Array(30), total: 100, skip: 0, limit: 30}
+                              console.log(data.products);   // (30) [{…}, {…}, {…}, {…}, ....]
+
+                              data.products.forEach(function(val){
+                                   // console.log(val);
+                                   console.log(val.id,val.title,val.price);
+                              });
+                         });
+                    }
+               
+               =>IP Registry Response
+
+                    function loaddata(){
+                         var key = `jkjnmoz3xzs9g6in`;
+                         var url = `https://api.ipregistry.co?key=${key}`; 
+                         
+                         $.ajax({
+                              method:"GET",
+                              url:url,
+                              dataType:"json"
+                         }).done((data)=>{
+                              // console.log(data); // {ip: '138.199.35.205', type: 'IPv4', hostname: null, carrier: {…}, company: {…}, …}
+                              var html = `
+                                        <ul>
+                                             <li>External IP = ${data.ip}</li>
+                                             <li>Current Device = ${data.user_agent.device.name} ${data.user_agent.device.type}</li>
+                                             <li>Operating System = ${data.user_agent.os.name}</li>
+                                             <li>Load By = ${data.user_agent.type}</li>
+                                             <li>City = ${data.location.city}</li>
+                                             <li>Local Currency = ${data.currency.symbol} </li>
+                                             <li>Time Zone = ${data["time_zone"]["id"]}</li>
+                                        </ul>
+                                   `;
+                                   getdisplay.innerHTML = html;
+                         }).fail(()=>{
+                              console.log("Error");
+                         });
+                    }
+
+
+=>POST Data
+     =In HTML File
+          <form action="" method="">
+               <div class="form-group mb-3">
+                    <label for="number">Enter Number</label>
+                    <input type="number" name="number" id="number" class="form-control" placeholder="Enter Number"/>
+               </div>
+
+               <div class="form-group mb-3">
+                    <label for="unit">Unit</label>
+                    <select name="unit" id="unit" class="form-select">
+                         <option value="" disabled selected>Choose Unit</option>
+                         <option value="kilo">Kilometer</option>
+                         <option value="mile">Mile</option>
+                    </select>
+               </div>
+
+               <button type="submit" id="result-btn">Result</button>
+
+          </form>
+          ....
+          <script type="text/javascript">
+
+               const getbtn = document.getElementById("result-btn");
+               getbtn.addEventListener("click",function(e){
+                    var getnum = document.getElementById("number").value;
+                    var getunit = document.getElementById("unit").value;
+                    // console.log(getnum,getunit); 
+
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = `http://localhost/jsonserver/l19server.php`;
+                    xmlhttp.open("POST",url,true); // true mean synchronize
+                    xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded"); //
+                    console.log(xmlhttp);
+                    xmlhttp.send("number="+getnum+"&unit="+getunit); // request send with the data
+
+                    xmlhttp.onreadystatechange = function(){
+                         if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                              var result = xmlhttp.responseText;
+                              
+                              // console.log(xmlhttp);
+                              // console.log(typeof xmlhttp.responseText); // string
+                              // console.log(typeof xmlhttp.response); // string
+
+                              var resultobj = JSON.parse(result);
+                              console.log(resultobj);
+                              
+                              console.log(resultobj.result);
+                              console.log(resultobj.message);
+                         }
+                    }
+
+                    e.preventDefault();
+               });
+
+          </script>
+     
+          request to this server http://localhost/jsonserver/l19server.php
+          
+          =>Sending data from url 
+               http://127.0.0.1:5501/l19postjsondatatolocal.html?number=100&unit=mile
+
+          =>JS Request Header Matching
+               xmlhttp.setRequestHeader(header,server response);
+                    -application/x-www-form-urlencoded = send form datas
+                    -application/json 
+               
+               *POST method require this extra step
+               *If not, it will get unwanted error.
+
+     =In Server File
+          <?php 
+
+               // echo "hay";
+
+               header("Access-Control-Allow-Origin:*");
+               header("Access-Control-Allow-Methods:GET,POST,PUT,DELETE,OPTIONS");
+               header("Access-Control-Allow-Headers:Content-Type,X-Auth-Token,Origin,Authorization");
+
+               $getnumber = $_POST["number"];
+               $getunit = $_POST["unit"];
+
+               $message = null;
+               $result = null;
+
+               if($getunit === "kilo"){
+                    $result = $getnumber * 0.621;
+                    $message = "Kilo to Mile";
+               }elseif($getunit === "mile"){
+                    $result = $getnumber * 1.609;
+                    $message = "Mile to Kilo";
+               }else{
+                    $message = "Invalid Unit";
+               }
+
+               $output = [
+                    "result" => $result,
+                    "message" => $message
+               ];
+               // echo "result is $output";
+               echo json_encode($output);
+          ?>
+
+          =>Server Part
+               *apache web server needed to on
+
+               c: > xampp > htdocs > 
+                    jsonserver > l19server.php
+
+               send by GET, recieve by GET()
+               send by POST, receive by POST()
+
+               =>matching requests
+                    -domain names
+                    -request methods
+                    -request headers
+                         -json format
+                         -authenticated
+                         -csrf token
+               
+               *data are processed and return as json array
+               *response array key can be changed as desired
+               *server file must only written the response code. Extra code can cause error.
+
+     =>POST Data with json string
+          =In HTML File
+               const getbtn = document.getElementById("result-btn");
+               getbtn.addEventListener("click",function(e){
+                    var getnum = document.getElementById("number").value;
+                    var getunit = document.getElementById("unit").value;
+                    // console.log(getnum,getunit); 
+                    var datajsobj = {"number":getnum,"unit":getunit};
+                    // console.log(datajsobj);
+                    var datajsonobj = JSON.stringify(datajsobj);
+                    // console.log(datajsonobj);
+
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = `http://localhost/jsonserver/l20server.php`;
+                    xmlhttp.open("POST",url,true); // true mean synchronize
+                    xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                    xmlhttp.send("datas="+datajsonobj);
+                    ....
+               });
+          
+               =>Send data with json string
+                    http://127.0.0.1:5501/l20postjsondatatolocal.html?data={"number":100,"unit":kilo};
+
+               *can only send data in url as string 
+                    - json object is converted to string
+                    - converted json string pass to url
+                    
+          =In Server File
+               ....
+               $getdatas = json_decode($_POST["datas"]); // {"number":"100","unit":"kilo"}
+               $getnumber = $getdatas->number;
+               $getunit =  $getdatas->unit;       
+               ....   
+
+               =>Server Part
+                    receive json string
+                    -change to json format
+                    -get data from each index of the json array 

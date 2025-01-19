@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Openweather API From URL 2</title>
+     </head>
+     <body>
+       
+          
+               <script type="text/javascript">
+                   var xmlhttp = new XMLHttpRequest();
+                   var url = 'https://randomuser.me/api/';
+                   
+                   xmlhttp.open("GET",url,false); // false mean no asynchronous
+                  //  xmlhttp.open("GET",url,true); // true mean asynchronous *error because steps are continuing without wating the previous step
+                   xmlhttp.send();
+
+                   if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                         var result = xmlhttp.responseText;
+                   }
+
+                   console.log(result);
+                   console.log(typeof result);
+
+                   result = JSON.parse(result);
+                   console.log(result);
+                   console.log(typeof result);
+
+                   console.log(result.results);
+                   console.log(result.results[0]);
+                   console.log(result.results[0].name);
+                   console.log(result.results[0].name.title,result.results[0].name.first,result.results[0].name.last);
+                   console.log(result.results[0]["name"]["title"],result.results[0]["name"]["first"],result.results[0]["name"]["last"]);
+
+               </script>
+     </body>
+</html>
+
+
+<!-- 
+      random user.me 
+      to getrandom user information 
+-->
+
+<!-- 
+      asynchronize mean to execute process orderly
+ -->

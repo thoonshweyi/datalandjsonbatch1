@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Randomuser API From URL 5</title>
+          <style type="text/css">
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <div id="display"></div>
+               <button type="button" id="btn">Load Data</button>
+          </div>
+       
+     
+          <script type="text/javascript">
+
+               var getdisplay = document.getElementById("display");
+               var getbtn = document.getElementById("btn");
+
+               getbtn.addEventListener("click",function(){
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = 'https://api.chucknorris.io/jokes/random';
+
+                    xmlhttp.onreadystatechange = function(){
+                              // console.log('State Changed = ',xmlhttp.readyState,xmlhttp.status);
+                         
+                              if(this.readyState === 4){
+                                   if(this.status === 200){
+                                        var result = xmlhttp.responseText;
+                                   
+                                        result = JSON.parse(result);
+                                        
+                                        // console.log(result); 
+                                   
+                                        var html= `<img src='${result.icon_url}' />
+                                        <h3>${result.value}</h3>
+                                        
+                                        `;
+                                   
+                                        getdisplay.innerHTML = html;
+                                   }
+                                   
+                              }
+
+                         }
+                         // console.log(xmlhttp);
+                         xmlhttp.onprogress = function(){
+                              console.log('ON PROGRESS= ',xmlhttp.readyState,xmlhttp.status)
+                         }
+                         xmlhttp.onload = function(){
+                              console.log('ON LOAD= ',xmlhttp.readyState,xmlhttp.status)
+                         }
+
+
+                    xmlhttp.open("GET",url,true); // true mean yes asynchronize
+                    xmlhttp.send();
+               });
+
+          </script>
+     </body>
+</html>
+
+
+<!-- 
+     State Changed =  1 0
+     State Changed =  2 200
+     State Changed =  3 200
+     ON PROGRESS=  3 200
+     State Changed =  4 200  
+     ON LOAD=  4 200
+ -->

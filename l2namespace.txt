@@ -1,0 +1,46 @@
+=>Namespace
+
+     -Namespace is required to exactly call desired node.
+
+     =>Exercise (Before Namespace)
+          <?xml version="1.0"?>
+
+          <Root>
+               <product>
+                    <title>Vehicle</title>
+                    <type>Ev Car</type>
+               </product>
+
+               <product>
+                    <title>T-shirt</title>
+                    <color>Red</color>
+               </product>
+
+               <product>
+                    <title>Fruit</title>
+                    <name>Orange</name>
+               </product>
+          </Root>
+
+     =>Exercise (After Namespace)
+          <?xml version="1.0"?>
+
+          <Root>
+               <v:product>
+                    <v:title>Vehicle</v:title>
+                    <v:type>Ev Car</v:type>
+               </v:product>
+
+               <c:product>
+                    <c:title>T-shirt</c:title>
+                    <c:color>Red</c:color>
+               </c:product>
+
+               <f:product>
+                    <f:title>Fruit</f:title>
+                    <f:name>Orange</f:name>
+               </product>
+          </Root>
+
+
+     

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Randomuser API From URL 4</title>
+          <style type="text/css">
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <div id="display"></div>
+               <button type="button" id="btn">Load Data</button>
+          </div>
+       
+          
+               <script type="text/javascript">
+
+                    var getdisplay = document.getElementById("display");
+                    var getbtn = document.getElementById("btn");
+
+                    getbtn.addEventListener("click",function(){
+                         var xmlhttp = new XMLHttpRequest();
+                         var url = 'https://randomuser.me/api/';
+
+                         xmlhttp.onreadystatechange = function(){
+                                   console.log('State Changed = ',xmlhttp.readyState,xmlhttp.status);
+                              
+                                   if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                                        var result = xmlhttp.responseText;
+                                        
+                                        result = JSON.parse(result);
+                                        
+                                        // console.log(result);
+                                        // console.log(result.results[0].name.title,result.results[0].name.first,result.results[0].name.last);
+                                   
+                                        var html= `<h3>${result.results[0].name.title}.${result.results[0].name.first} ${result.results[0].name.last}</h3>
+                                        <img src='${result.results[0].picture.large}' />
+                                        `;
+                                   
+                                        getdisplay.innerHTML = html;
+                                   }
+
+                              }
+                              // console.log(xmlhttp);
+                              xmlhttp.onprogress = function(){
+                                   console.log('ON PROGRESS= ',xmlhttp.readyState,xmlhttp.status)
+                              }
+                              xmlhttp.onload = function(){
+                                   console.log('ON LOAD= ',xmlhttp.readyState,xmlhttp.status)
+                              }
+
+
+                         xmlhttp.open("GET",url,true); // true mean yes asynchronize
+                         xmlhttp.send();
+                    });
+               </script>
+     </body>
+</html>
+
+
+<!-- 
+     State Changed =  1 0
+     State Changed =  2 200
+     State Changed =  3 200
+     ON PROGRESS=  3 200
+     State Changed =  4 200  
+     ON LOAD=  4 200
+ -->

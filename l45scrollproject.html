@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Scroll Project</title>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+          <style type="text/css">
+               body{
+                    font-family: sans-serif;
+                    background-color: #f4f4f4;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+
+                    padding: 0;
+                    margin: 0;
+               }
+               .post{
+                    width: 500px;
+                    background-color: #fff;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                    
+                    padding: 20px;
+                    margin: 40px 0;
+
+                    position: relative;
+               }
+               .post .postid{
+                    width: 30px;
+                    height: 30px;
+                    background-color: #000;
+                    color: #fff;
+                    border-radius: 50%;
+                    font-size: 15px;
+                    
+                    position: absolute;
+                    right: -15px;
+                    bottom: -15px;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+
+               .loader{
+                    display: flex;
+
+                    position: fixed;
+                    bottom: 10px;
+
+                    opacity: 0;
+               }
+               .loader.show{
+                    opacity: 1;
+               }
+               .triangle{
+                    width: 0;
+                    height: 0;
+                    /* background-color: black; */
+
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    border-top: 10px solid blue;
+
+                    margin: 5px;
+
+                    animation: myani 0.5s ease-in-out infinite;
+               }
+               .triangle:nth-last-of-type(2){
+                    animation-delay: 0.1s;
+               }
+               .triangle:nth-last-of-type(3){
+                    animation-delay: 0.2s;
+               }
+
+               @keyframes myani{
+                    0%{
+                         transform: translateY(0);
+                    }
+                    50%{
+                         transform: translateY(-10px);
+                    }
+                    100%{
+                         transform: translateY(0);
+                    }
+               }
+          </style>
+     </head>
+     <body>
+
+          <div class="container">
+               <!-- <div class="post">
+                    <div class="postid">1</div>
+                    <div class="info">
+                         <img src="" alt="">
+                         <h4 class="title">Mr.Aung Aung</h4>
+                         <a href="tel:0912345678" class="content">09123456789</a>
+                         <br/>
+                         <a href="mailto:aungaung@gmail.com" class="content">aungaung@gmai.com</a>
+                         <p class="country">Myanmar</p>
+                    </div>
+               </div>
+               <div class="post">
+                    <div class="postid">2</div>
+                    <div class="info">
+                         <img src="" alt="">
+                         <h4 class="title">Ms Su Su</h4>
+                         <a href="tel:0912345678" class="content">09123456789</a>
+                         <br/>
+                         <a href="mailto:susu@gmail.com" class="content">susu@gmai.com</a>
+                         <p class="country">Myanmar</p>
+                         
+                    </div>
+               </div> -->
+          </div>
+
+          <div class="loader">
+               <div class="triangle"></div>
+               <div class="triangle"></div>
+               <div class="triangle"></div>
+          </div>
+
+
+          <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
+          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+          <script type="text/javascript">
+               
+               const getcontainer = document.querySelector(".container");
+               const loading = document.querySelector(".loader");
+               let page = 1;
+               const limit = 2;
+               let x = 0;
+
+               async function getposts(){
+                    const url = `https://randomuser.me/api/?page=${page}&results=${limit}&seed=abc`;
+                    let posts;
+                    await fetch(url).then(response=>{
+                         return response.json();
+                    }).then(data=>{
+                         // console.log(data);
+                         posts = data.results;
+                         console.log(posts);
+                    }).catch(err=>{
+                         console.log(err);
+                    });                   
+                    return posts; 
+               }
+               // getposts();
+
+               async function showposttodom(){
+                    const getusers = await getposts();
+
+                    // console.log(getusers);
+
+                    getusers.forEach((getusers)=>{
+                         const newdiv = document.createElement("div");
+                         newdiv.classList.add("post");
+
+                         newdiv.innerHTML = `
+                         <div class="postid">${++x}</div>
+                         <div class="info">
+                              <img src="${getusers.picture.large}" alt="${getusers.name.first}">
+                              <h4 class="title">${getusers.name.title}. ${getusers.name.first} ${getusers.name.last}</h4>
+                              <a href="tel:${getusers.phone}" class="content">${getusers.phone}</a>
+                              <br/>
+                              <a href="mailto:${getusers.email}" class="content">${getusers.email}</a>
+                              <p class="country">${getusers.location.country}</p>
+                              
+                         </div>
+                         `;
+                         // console.log(newdiv);
+                         getcontainer.appendChild(newdiv);
+                    });
+
+               }
+               showposttodom();
+
+               window.addEventListener("scroll",()=>{
+                    // console.log(document.documentElement.scrollTop); // 72
+                    // console.log(document.documentElement.clientHeight); // 966
+                    // console.log(document.documentElement.scrollHeight); // 1023
+                    console.log(document.documentElement.scrollBottom); // 72
+                    
+                    const {scrollTop,clientHeight,scrollHeight} = document.documentElement;
+                    // console.log(scrollTop,clientHeight,scrollHeight);
+
+                    if(scrollTop+clientHeight >= scrollHeight - 8){
+                         // console.log("hay");
+                         showloading();
+                    }
+               });
+
+               function showloading(){
+                    loading.classList.add("show");
+                    setTimeout(()=>{
+                         page++;
+                         loading.classList.remove("show");
+                         showposttodom();
+                    },500)
+               }
+
+          </script>
+     </body>
+</html>
+
+
+<!-- 
+
+     
+-->

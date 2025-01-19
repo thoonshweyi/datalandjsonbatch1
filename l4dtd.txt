@@ -1,0 +1,62 @@
+=>DTD 
+     DTD stand for Document Type Definitions
+=>DTD
+1. DTD can defines what elements and attribute can be represents
+2. DTD can Ordering & Nested of the element 
+3. DTD from SGML Syntax. (Standard Generalized Markup Language) <>
+
+=>Internal
+     <?xml version="1.0"?>
+     <!DOCTYPE documentelement [Definitions]>
+
+=>External
+     <?xml version="1.0"?>
+     <!DOCTYPE documentelement SYSTEM="documentelement.dtd">
+
+=>DTD vs XSD
+
+DTD is base on SGML Syntax                   XSD are written in XML
+DTD support limited Data Type                XSD has wide range of Data Type
+DTD does not support Namespace               XSD support Namespace
+DTD is not extensible                        XSD is extensible
+
+=>Data Type
+For number = CDATA ( Contain Character Data )
+For number = PCDATA ( Contain Prased Character Data )
+
+
+=>XML Document
+<?xml version="1.0"?>
+<!DOCTYPE product SYSTEM="product.dtd">
+<product>
+     <name>Jetbrain</name>
+     <description>Webstrom Editor</description>
+     <price>$100</price>
+     <status>true</status>
+</product>
+
+=>DTD Document
+
+product.dtd
+<!ELEMENT product(name,description,price,status)>
+<!ELEMENT name(#PCDATA)>
+<!ELEMENT description(#PCDATA)>
+<!ELEMENT price(#PCDATA)>
+<!ELEMENT status(#PCDATA)>
+
+=>DTD + XML Document
+<?xml version="1.0"?>
+<!DOCTYPE product [
+     <!ELEMENT product(name,description,price,status)>
+     <!ELEMENT name(#PCDATA)>
+     <!ELEMENT description(#PCDATA)>
+     <!ELEMENT price(#CDATA)>
+     <!ELEMENT status(#PCDATA)>
+]>
+<product>
+     <name>Jetbrain</name>
+     <description>Webstrom Editor</description>
+     <price>100</price>
+     <status>true</status>
+</product>
+

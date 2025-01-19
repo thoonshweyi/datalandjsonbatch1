@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Joke API From URL 7 with xml</title>
+          <style type="text/css">
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <div id="display"></div>
+               <button type="button" id="btn">Click Me</button>
+          </div>
+       
+          <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
+     
+          <script type="text/javascript">
+
+              var getbtn = document.getElementById("btn");
+              var getdisplay = document.getElementById("display");
+
+              getbtn.addEventListener("click",function(){
+                    loaddata();
+              });
+
+          function loaddata(){
+               var key = `jkjnmoz3xzs9g6in`;
+               var url = `https://api.ipregistry.co?key=${key}`; 
+               
+               $.ajax({
+                    method:"GET",
+                    url:url,
+                    dataType:"json"
+               }).done((data)=>{
+                    // console.log(data); // {ip: '138.199.35.205', type: 'IPv4', hostname: null, carrier: {…}, company: {…}, …}
+                    var html = `
+                              <ul>
+                                   <li>External IP = ${data.ip}</li>
+                                   <li>Current Device = ${data.user_agent.device.name} ${data.user_agent.device.type}</li>
+                                   <li>Operating System = ${data.user_agent.os.name}</li>
+                                   <li>Load By = ${data.user_agent.type}</li>
+                                   <li>City = ${data.location.city}</li>
+                                   <li>Local Currency = ${data.currency.symbol} </li>
+                                   <li>Time Zone = ${data["time_zone"]["id"]}</li>
+                              </ul>
+                         `;
+                         getdisplay.innerHTML = html;
+               }).fail(()=>{
+                    console.log("Error");
+               });
+          }
+          </script>
+     </body>
+</html>
+
+<!-- 8SX -->

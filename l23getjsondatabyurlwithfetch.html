@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Joke API From URL 5</title>
+          <style type="text/css">
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <div id="display"></div>
+               <button type="button" id="btn">Load Data</button>
+          </div>
+       
+     
+          <script type="text/javascript">
+
+               var getdisplay = document.getElementById("display");
+               var getbtn = document.getElementById("btn");
+
+               getbtn.addEventListener("click",function(){
+                    loaddata();
+               });
+
+               
+               function loaddata(){
+                    // var xmlhttp = new XMLHttpRequest();
+                    // var url = 'https://api.chucknorris.io/jokes/random';
+
+                    // xmlhttp.onreadystatechange = function(){
+                    //           // console.log('State Changed = ',xmlhttp.readyState,xmlhttp.status);
+                         
+                    //           if(this.readyState === 4){
+                    //                if(this.status === 200){
+                    //                     var result = xmlhttp.responseText;
+                                   
+                    //                     result = JSON.parse(result);
+                                        
+                    //                     // console.log(result);
+                                   
+                    //                     var html= `<img src='${result.icon_url}' />
+                    //                     <h3>${result.value}</h3>
+                                        
+                    //                     `;
+                                   
+                    //                     getdisplay.innerHTML = html;
+                    //                }
+                                   
+                    //           }
+
+                    //      }
+                    //      // console.log(xmlhttp);
+                    //      xmlhttp.onprogress = function(){
+                    //           console.log('ON PROGRESS= ',xmlhttp.readyState,xmlhttp.status)
+                    //      }
+                    //      xmlhttp.onload = function(){
+                    //           console.log('ON LOAD= ',xmlhttp.readyState,xmlhttp.status)
+                    //      }
+
+
+                    // xmlhttp.open("GET",url,true); // true mean yes asynchronize
+                    // xmlhttp.send();
+
+                    // =>fetch()
+                    var url = 'https://api.chucknorris.io/jokes/random';
+                    fetch(url).then(function(response){
+                         return response.json();
+                    }).then(function(data){
+                         console.log(data);
+
+                         var html= `<img src='${data.icon_url}' />
+                                        <h3>${data.value}</h3>
+                                   `;
+                         getdisplay.innerHTML = html;
+                    }).catch(function(err){
+                         console.log(err);
+                    });
+               }
+          </script>
+     </body>
+</html>
+
+

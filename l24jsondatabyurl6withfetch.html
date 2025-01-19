@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Joke API From URL 6 with fetch</title>
+          <style type="text/css">
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <h3>Using Fetch</h3>
+               <div id="display"></div>
+               <button type="button" id="btn">Click Me</button>
+          </div>
+       
+     
+          <script type="text/javascript">
+
+              var getbtn = document.getElementById("btn");
+
+              getbtn.addEventListener("click",function(){
+
+                    loaddata();
+              });
+
+              function loaddata(){
+                    var url = "https://dummyjson.com/products";
+                    fetch(url).then(function(response){
+                         return response.json();
+                    }).then(function(data){
+                         // console.log(data);            
+                         // console.log(data.products);   
+
+                         data.products.forEach(function(val){
+                              // console.log(val);
+                              console.log(val.id,val.title,val.price);
+                         });
+                    }
+                    ).catch(function(err){
+                         console.log(err);
+                    });
+              }
+          </script>
+     </body>
+</html>
+
+
+<!-- https://dummyjson.com/ -->

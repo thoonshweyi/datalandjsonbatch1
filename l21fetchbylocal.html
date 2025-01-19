@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Openweathermap API</title>
+     </head>
+     <body>
+       
+          
+               <script type="text/javascript">
+
+                    // =>fetch()
+
+                    // Syntax:
+                    // fetch(url)
+                    // .then(response=>response.json())
+                    // .then(data)
+                    // .catch(err=>console.log(err))
+                   
+                    var url = "./l12simpledata.json";
+                    fetch(url).then(function(response){
+                         // console.log(response); // Response Object
+                         // console.log(response.headers.get("Content-type")); // application/json; charset=UTF-8
+                         // console.log(response.type); // basic
+                         return response.json();
+                    })
+                    .then(function(data){
+                         // console.log(data); // json object
+                         // console.log(typeof data); // object
+                         
+
+                         console.log(data.weather);
+                         console.log(data.weather[0].main);
+                         console.log(data.weather[0]["main"]);
+
+                         console.log(data.wind.speed);
+                         console.log(data.wind["speed"]);
+                         console.log(data["wind"]["speed"]);
+
+                         console.log(data.name);
+                    })
+                    .catch(function(err){
+                         console.log(err);
+                    });
+               </script>
+     </body>
+</html>
+
+<!-- 
+     1 get data from url
+     2 convert json format
+     3 object print out
+     4 error catching
+
+     fetch - then - then - catch
+     response - convert to json object - getting data from formated json object - error handling
+-->
+ 

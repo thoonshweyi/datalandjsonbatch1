@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Openweathermap API</title>
+          <style type="text/css">
+               body{
+                    height: 100vh;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container{
+                    width: 300px;
+                    background-color: #f4f4f4;
+                    padding: 10px;
+               }
+          </style>
+     </head>
+     <body>
+               <div class="container">
+                    <div id="display"></div>
+                    <button type="button" id="btn">Load Data</button>
+               </div>
+               <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
+               <script type="text/javascript">
+                     // AJAX
+                    // initialize the HTTP Request
+
+                    // var xmlhttp = new XMLHttpRequest();
+                    // xmlhttp.open("GET","./l12simpledata.json",false); // false mean no asynchronize
+                    // xmlhttp.send();
+
+
+                    // if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                    //      // var result = xmlhttp;
+                    //      // console.log(result); // XMLHttpReqeust Object
+                         
+                    //      var result = xmlhttp.responseText;
+                    //      console.log(result)
+                    //      console.log(typeof result)
+
+                    //      result = JSON.parse(result);
+
+                    //      console.log(result);
+                    //      console.log(typeof result);
+
+                    //      console.log(result.weather);
+                    //      console.log(result.weather[0].main);
+                    //      console.log(result.weather[0]["main"]);
+
+                    //      console.log(result.wind.speed);
+                    //      console.log(result.wind["speed"]);
+                    //      console.log(result["wind"]["speed"]);
+
+                    //      console.log(result.name);
+                    // }
+
+                    // =>fetch()
+
+                    // Syntax:
+                    // fetch(url)
+                    // .then(response=>response.json())
+                    // .then(data)
+                    // .catch(err=>console.log(err))
+                   
+                    // var url = "./l12simpledata.json";
+                    // fetch(url).then(function(response){
+                    //      // console.log(response); // Response Object
+                    //      // console.log(response.headers.get("Content-type")); // application/json; charset=UTF-8
+                    //      // console.log(response.type); // basic
+                    //      return response.json();
+                    // })
+                    // .then(function(data){
+                    //      // console.log(data); // json object
+                    //      // console.log(typeof data); // object
+                         
+
+                    //      console.log(data.weather);
+                    //      console.log(data.weather[0].main);
+                    //      console.log(data.weather[0]["main"]);
+
+                    //      console.log(data.wind.speed);
+                    //      console.log(data.wind["speed"]);
+                    //      console.log(data["wind"]["speed"]);
+
+                    //      console.log(data.name);
+                    // })
+                    // .catch(function(err){
+                    //      console.log(err);
+                    // });
+
+                    // =>$.ajax()
+                    // =Syntax 
+                    // $.ajax({
+                    //      url:url
+                    // }).done((data)=>{
+                    //      output
+                    // }).fail(()=>{
+
+                    // });
+
+                    var url = "./l12simpledata.json";
+                    // $.ajax({
+                    //      method:"GET",
+                    //      url:url,
+                    //      dataType:'json' // text
+                    // }).done((data)=>{
+                    //      // console.log(data); // Json Object
+                    //      // console.log(typeof data); // object
+                    
+                    //      console.log(data.weather);
+                    //      console.log(data.weather[0].main);
+                    //      console.log(data.weather[0]["main"]);
+
+                    //      console.log(data.wind.speed);
+                    //      console.log(data.wind["speed"]);
+                    //      console.log(data["wind"]["speed"]);
+
+                    //      console.log(data.name);
+                    // }).fail(()=>{
+                    //      console.log("Error")
+                    // });
+
+                    // $.ajax({
+                    //      method:"GET",
+                    //      url:url,
+                    //      dataType:'json', // text
+                    //      success:successfun
+                    // });
+
+                    // function successfun(data,status,xhr){
+                    //      console.log(data); // Json Object
+                    //      console.log(status); // success
+                    //      console.log(xhr); // {readyState: 4, getResponseHeader: ƒ, getAllResponseHeaders: ƒ, setRequestHeader: ƒ, overrideMimeType: ƒ, …}
+                    //      console.log(xhr.status); // 200
+                         
+
+                    //      console.log(data.wind.speed);
+                    //      console.log(data.wind["speed"]);
+                    //      console.log(data["wind"]["speed"]);
+
+                    //      console.log(data.name);
+                    // }
+
+                    // jQuery ajax Short Hand
+                    $("#btn").click(()=>{
+                         $.get(url,output);
+                    });
+                    function output(data){
+                         console.log(data); // Json Object
+                         console.log(data.name); 
+                    }
+               </script>
+     </body>
+</html>
+
