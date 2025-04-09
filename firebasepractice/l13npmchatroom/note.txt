@@ -1,0 +1,4 @@
+=Vite server start the file path at 
+     publicDir: '../public/',
+=In development environment, npm run build
+     it will run it original file and not modification file.
