@@ -6,6 +6,8 @@ export function Chatroom(room,username){
      let curroom = room;
      let curuser = username;
      const dbRef = collection(db,'chats')
+     let unsubscribe = null;
+
      const addChat = async (message)=>{
           const now = new Date();
           const chatdata = {
@@ -35,19 +37,26 @@ export function Chatroom(room,username){
           //      });
           //  });
 
+          // if(unsubscribe){
+          //      unsubscribe();
+          // }
 
-          onSnapshot(
+          if(unsubscribe) unsubscribe();
+
+          unsubscribe = onSnapshot(
                query(dbRef,where('room','==',curroom),orderBy('created_at'))
-               ,docSnap=>{
-               docSnap.docChanges().forEach((item)=>{
-                    console.log(item)
-                    // console.log(item.doc.data());
+               ,(docSnap)=>{
+               docSnap.docChanges().forEach(item=>{
+                    // console.log(item)
+                    // console.log(item.doc);
 
                     if(item.type === 'added'){
                          callback(item.doc.data());
                     }
                });
            });
+
+           console.log(unsubscribe);
      }
 
      const updateChatroom = (newroom)=>{
@@ -63,3 +72,12 @@ export function Chatroom(room,username){
 
      return {addChat,getChats,updateChatroom,updateUsername};
 }
+
+
+// **** Double message occur when click the one chatroom multiple time.
+// **** Because, it listen the same row changes results more than one time.
+
+
+// () => {
+//      i2.eu(), e2.asyncQueue.enqueueAndForget(async () => __PRIVATE_eventManagerUnlisten(await __PRIVATE_getEventManager(e2), s2));
+//    }

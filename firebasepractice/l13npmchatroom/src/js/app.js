@@ -53,7 +53,7 @@ chatrooms.addEventListener('click',(e)=>{
      e.preventDefault();
 
      const getbtn = e.target.closest('button');
-     // console.log(getbtn);
+     console.log(getbtn);
 
      if(getbtn){
           // reset li, clear all previous lis
